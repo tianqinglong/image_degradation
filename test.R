@@ -50,3 +50,27 @@ lower_ref10k <- read.csv("convex_hull/10000-lower-ref.csv", header = F, col.name
 upper_ref10k <- read.csv("convex_hull/10000-upper-ref.csv", header = F, col.names = c("X", "Y"))
 lower10k <- raw_cord2new_cord(cnt10k, lower_ref10k, upper_ref10k)
 polygon(x = lower10k[,1], y = lower10k[,2], col = alpha("blue", 0.4))
+
+# Determine if points is inside or outside the polygon
+library(sp)
+plot(x = lower60k[,1], y = lower60k[,2], type = "n")
+polygon(x = lower60k[,1], y = lower60k[,2], col = alpha("red", 0.4))
+
+# Point 1 is outside, point 2 is inside
+
+test_point_1_x <- 0.15
+test_point_1_y <- -0.05
+
+test_point_2_x <- 0.3
+test_point_2_y <- -0.05
+
+points(x = c(test_point_1_x, test_point_2_x),
+       y = c(test_point_1_y, test_point_2_y),
+       pch = 16, cex = 1)
+text(x = c(test_point_1_x, test_point_2_x),
+     y = c(test_point_1_y, test_point_2_y)-0.006,
+     c("1","2"))
+
+point.in.polygon(c(test_point_1_x, test_point_2_x),
+                 c(test_point_1_y, test_point_2_y),
+                 lower60k[,1], lower60k[,2])
